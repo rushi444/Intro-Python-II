@@ -2,8 +2,17 @@
 # currently.
 
 class Player:
-    def _init_(self, name, room):
+    def __init__(self, name, room):
         self.name = name
         self.room = room
-    def _repr_(self):
-        return f'Name: {self.name}, Currently in : {self.room}'
+    def __repr__(self):
+        return f'Name: {self.name}, Current Room : {self.room}'
+    def travel(self, direction):
+        if direction == "n":
+            self.room = self.room.n_to
+        if direction == "s":
+            self.room = self.room.s_to
+        if direction == "e":
+            self.room = self.room.e_to
+        if direction == "w":
+            self.room = self.room.w_to
