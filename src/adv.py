@@ -1,7 +1,8 @@
 from room import Room
 from player import Player
+from item import Item
 
-# Declare all the rooms
+# Declare all the rooms and items
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -21,6 +22,22 @@ to north. The smell of gold permeates the air."""),
 chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
+
+items = {
+    'iphone': Item('iphone', 'A cell phone'),
+    'ps4': Item('ps4', 'A gaming console'),
+    'sunglasses': (Item('sunglasses', 'Protects eyes from sunlight')),
+    'gun': (Item('gun', 'Use to kill zombies')),
+    'laptop': (Item('laptop', 'Portable computer')),
+    'headphones': (Item('headphones', 'Keep the slaps coming')),
+    'flashlight': (Item('flashlight', 'Used to see in the dark'))
+}
+
+room['outside'].itemList = items['sunglasses']
+room['foyer'].itemList = items['ps4'], items['gun']
+room['overlook'].itemList = items['sunglasses']
+room['narrow'].itemList = items['flashlight']
+room['treasure'].itemList = items['laptop'], items['iphone'], items['headphones']
 
 
 # Link rooms together
@@ -51,20 +68,28 @@ player = Player('Justin', room['outside'])
 valid = ('n', 's', 'e', 'w')
 
 
-def characterMove():
-    print(f'Current Room: {player.room.room_name}')
-    print(f'Description: {player.room.description}')
-    direction = input("Input n(north), w(west), s(south), e(east):")
-    if direction in valid:
-        if player.room.get_directions(direction) is None:
-            print('Invalid Direction, you cannot go that way')
-        else:
-            player.travel(direction)
-            print(player)
-    else:
-        print("Not a valid command!!")
 
-characterMove()
+if __name__ == '__main__':
+    while True:
+        print(player)
+        direction = input("\nIf you would like to go to a different room: n(north), w(west), s(south), e(east):\nIf you would like to take/drop an item type take or drop:")
+        if direction in valid:
+            if player.room.get_directions(direction) is None:
+                print('Invalid Direction, you cannot go that way')
+            else:
+                player.travel(direction)
+                print(player)
+        elif direction == 'q':
+            break
+        elif direction == 'take':
+            takeItem = input('What item do you want?') 
+            player.addItems(takeItem)
+            print(player)
+        else:
+            print("Not a valid command!!")
+        
+
+
 
 
 #

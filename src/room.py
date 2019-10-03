@@ -2,15 +2,16 @@
 # description attributes.
 
 class Room: 
-    def __init__(self, room_name, description):
+    def __init__(self, room_name, description, itemList = {}):
         self.room_name = room_name
         self.description = description
         self.n_to = None
         self.s_to = None
         self.w_to = None
         self.e_to = None
+        self.itemList = itemList
     def __repr__(self):
-        return f'Room Name: {self.room_name}, Description: {self.description}'
+        return f'Room Name: {self.room_name}, \nDescription: {self.description}, \nItems in room: {self.itemList}'
     def get_directions(self, direction):
         if direction == "n":
             return self.n_to
