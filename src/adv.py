@@ -72,7 +72,7 @@ valid = ('n', 's', 'e', 'w')
 if __name__ == '__main__':
     while True:
         print(player)
-        direction = input("\nIf you would like to go to a different room: n(north), w(west), s(south), e(east):\nIf you would like to take/drop an item type take or drop:")
+        direction = input("\nIf you would like to go to a different room: n(north), w(west), s(south), e(east):\nIf you would like to take/drop an item type take or drop: \nIf you would like to check your inventory press i:")
         if direction in valid:
             if player.room.get_directions(direction) is None:
                 print('Invalid Direction, you cannot go that way')
@@ -85,6 +85,8 @@ if __name__ == '__main__':
             takeItem = input('What item do you want?') 
             player.addItems(takeItem)
             print(player)
+        elif direction == 'i':
+            print(player.items)
         else:
             print("Not a valid command!!")
         
