@@ -1,6 +1,8 @@
 from room import Room
+from player import Player
+from item import Item
 
-# Declare all the rooms
+# Declare all the rooms and items
 
 room = {
     'outside':  Room("Outside Cave Entrance",
@@ -21,6 +23,22 @@ chamber! Sadly, it has already been completely emptied by
 earlier adventurers. The only exit is to the south."""),
 }
 
+items = {
+    'iphone': Item('iphone', 'A cell phone'),
+    'ps4': Item('ps4', 'A gaming console'),
+    'sunglasses': (Item('sunglasses', 'Protects eyes from sunlight')),
+    'gun': (Item('gun', 'Use to kill zombies')),
+    'laptop': (Item('laptop', 'Portable computer')),
+    'headphones': (Item('headphones', 'Keep the slaps coming')),
+    'flashlight': (Item('flashlight', 'Used to see in the dark'))
+}
+
+room['outside'].itemList = items['sunglasses']
+room['foyer'].itemList = items['ps4'], items['gun']
+room['overlook'].itemList = items['sunglasses']
+room['narrow'].itemList = items['flashlight']
+room['treasure'].itemList = items['laptop'], items['iphone'], items['headphones']
+
 
 # Link rooms together
 
@@ -39,11 +57,43 @@ room['treasure'].s_to = room['narrow']
 
 # Make a new player object that is currently in the 'outside' room.
 
+player = Player('Justin', room['outside'])
+
 # Write a loop that:
 #
 # * Prints the current room name
 # * Prints the current description (the textwrap module might be useful here).
-# * Waits for user input and decides what to do.
+# # * Waits for user input and decides what to do.
+
+valid = ('n', 's', 'e', 'w')
+
+
+
+if __name__ == '__main__':
+    while True:
+        print(player)
+        direction = input("\nIf you would like to go to a different room: n(north), w(west), s(south), e(east):\nIf you would like to take/drop an item type take or drop: \nIf you would like to check your inventory press i:")
+        if direction in valid:
+            if player.room.get_directions(direction) is None:
+                print('Invalid Direction, you cannot go that way')
+            else:
+                player.travel(direction)
+                print(player)
+        elif direction == 'q':
+            break
+        elif direction == 'take':
+            takeItem = input('What item do you want?') 
+            player.addItems(takeItem)
+            print(player)
+        elif direction == 'i':
+            print(player.items)
+        else:
+            print("Not a valid command!!")
+        
+
+
+
+
 #
 # If the user enters a cardinal direction, attempt to move to the room there.
 # Print an error message if the movement isn't allowed.
